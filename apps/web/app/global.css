@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@config "../../../packages/config-tailwind/preset.ts";
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 13px;
+    line-height: 20px;
+  }
+}

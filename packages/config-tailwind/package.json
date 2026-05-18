@@ -1,0 +1,11 @@
+{
+  "name": "@guild-optimized/config-tailwind",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./preset": "./preset.ts"
+  },
+  "dependencies": {
+    "tailwindcss": "^4.2.2"
+  }
+}
