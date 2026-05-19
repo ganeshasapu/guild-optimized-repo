@@ -34,3 +34,5 @@ packages/config-typescript  → Shared TypeScript configuration
 packages/config-tailwind    → Shared Tailwind preset
 packages/domain-*           → Domain packages (created by agents)
 ```
+
+1<!-- Updated by Guild AI -->
