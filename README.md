@@ -26,11 +26,12 @@ This repo is managed by a Guild.AI agent pipeline. Agents implement Linear ticke
 
 ```
 apps/web                    → Next.js application
-packages/db                 → Drizzle schema, migrations, client
+packages/db                  → Drizzle schema, migrations, client
 packages/shared             → Cross-domain types and utilities
-packages/ui                 → shadcn/ui component library
+packages/ui                  → shadcn/ui component library
 packages/config-eslint      → Shared ESLint configuration
 packages/config-typescript  → Shared TypeScript configuration
 packages/config-tailwind    → Shared Tailwind preset
 packages/domain-*           → Domain packages (created by agents)
 ```
+<!-- Optimized for Guild AI workflows -->
