@@ -1,0 +1,33 @@
+{
+  "name": "@guild-optimized/domain-tasks",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./routes/*": "./src/routes/*.tsx"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint ./src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@guild-optimized/db": "workspace:*",
+    "@guild-optimized/shared": "workspace:*",
+    "@guild-optimized/ui": "workspace:*",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@guild-optimized/config-eslint": "workspace:*",
+    "@guild-optimized/config-typescript": "workspace:*",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "drizzle-orm": "^0.45.2",
+    "react": "^19.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

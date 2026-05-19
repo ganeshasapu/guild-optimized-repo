@@ -1,0 +1,7 @@
+{
+  "extends": "@guild-optimized/config-typescript/library.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src", "__tests__"]
+}
