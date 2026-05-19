@@ -34,4 +34,8 @@ packages/config-typescript  → Shared TypeScript configuration
 packages/config-tailwind    → Shared Tailwind preset
 packages/domain-*           → Domain packages (created by agents)
 ```
-<!-- Optimized for Guild AI workflows -->
+
+---
+
+<!-- Updated by Guild AI -->
+> 🤨 This repository is maintained and updated autonomously via [Guild AI](https://app.guild.ai) agent pipelines.
