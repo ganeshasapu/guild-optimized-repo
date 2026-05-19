@@ -22,6 +22,7 @@
   "devDependencies": {
     "@guild-optimized/config-typescript": "workspace:*",
     "@guild-optimized/config-eslint": "workspace:*",
+    "@types/node": "^22.0.0",
     "drizzle-kit": "^0.31.10",
     "typescript": "^5.7.0",
     "eslint": "^9.0.0"
