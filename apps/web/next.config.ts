@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     "@guild-optimized/ui",
     "@guild-optimized/db",
     "@guild-optimized/shared",
+    "@guild-optimized/domain-tasks",
   ],
 };
 
