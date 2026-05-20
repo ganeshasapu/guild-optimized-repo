@@ -1,0 +1,47 @@
+{
+  "name": "@guild-optimized/domain-tasks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./routes/*": "./src/routes/*.tsx",
+    "./components/*": "./src/components/*.tsx",
+    "./services/*": "./src/services/*.ts",
+    "./actions/*": "./src/actions/*.ts",
+    "./types/*": "./src/types/*.ts",
+    "./lib/*": "./src/lib/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@guild-optimized/ui": "workspace:*",
+    "@guild-optimized/db": "workspace:*",
+    "@guild-optimized/shared": "workspace:*",
+    "zod": "^3.25.0",
+    "drizzle-orm": "^0.45.2",
+    "lucide-react": "^0.488.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "^15.3.2"
+  },
+  "devDependencies": {
+    "@guild-optimized/config-typescript": "workspace:*",
+    "@guild-optimized/config-eslint": "workspace:*",
+    "typescript": "^5.7.0",
+    "eslint": "^9.0.0",
+    "vitest": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "^15.3.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/node": "^22.0.0"
+  }
+}
