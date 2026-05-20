@@ -1,3 +1,4 @@
-// This file exists to make the package valid
-// Re-exports are handled via package.json exports field
+// Main entry point for @guild-optimized/domain-tasks
+// Re-export all public APIs here as they are implemented
+
 export {};
