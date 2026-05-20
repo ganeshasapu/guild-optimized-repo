@@ -16,14 +16,15 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "drizzle-orm": "^0.45.2",
-    "@neondatabase/serverless": "^1.0.2"
+    "@neondatabase/serverless": "^1.0.2",
+    "drizzle-orm": "^0.45.2"
   },
   "devDependencies": {
-    "@guild-optimized/config-typescript": "workspace:*",
     "@guild-optimized/config-eslint": "workspace:*",
+    "@guild-optimized/config-typescript": "workspace:*",
+    "@types/node": "^25.9.1",
     "drizzle-kit": "^0.31.10",
-    "typescript": "^5.7.0",
-    "eslint": "^9.0.0"
+    "eslint": "^9.0.0",
+    "typescript": "^5.7.0"
   }
 }
