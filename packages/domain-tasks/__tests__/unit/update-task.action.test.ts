@@ -59,7 +59,7 @@ describe("updateTask action", () => {
   });
 
   it("should return error when task not found", async () => {
-    mockUpdateTask.mockResolvedValue(undefined);
+    mockUpdateTask.mockResolvedValue(null);
 
     const result = await updateTask("123e4567-e89b-12d3-a456-426614174000", {
       title: "Updated Task",
