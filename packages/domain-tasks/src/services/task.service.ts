@@ -1,55 +1,85 @@
-import type { Task } from "@guild-optimized/db";
-import type { CreateTaskInput, UpdateTaskInput } from "../lib/validation";
+import { eq } from "drizzle-orm";
+
+import { getDb, tasks } from "@guild-optimized/db";
+
+import type { CreateTaskInput, Task, UpdateTaskInput } from "../types/task";
 
 /**
  * Create a new task
- * @param _input - The task data to create
- * @returns The created task
  */
-export async function createTask(_input: CreateTaskInput): Promise<Task> {
-  // TODO: Implement in issue #12
-  throw new Error("createTask not yet implemented - pending issue #12");
+export async function createTask(
+  input: CreateTaskInput,
+  databaseUrl?: string
+): Promise<Task> {
+  const db = getDb(databaseUrl);
+  const [task] = await db
+    .insert(tasks)
+    .values({
+      title: input.title,
+      description: input.description,
+      status: input.status ?? "todo",
+      priority: input.priority ?? "medium",
+    })
+    .returning();
+
+  if (!task) {
+    throw new Error("Failed to create task");
+  }
+
+  return task;
 }
 
 /**
  * Get a task by ID
- * @param _id - The task ID
- * @returns The task if found, undefined otherwise
  */
-export async function getTaskById(_id: string): Promise<Task | undefined> {
-  // TODO: Implement in issue #12
-  throw new Error("getTaskById not yet implemented - pending issue #12");
+export async function getTaskById(
+  id: string,
+  databaseUrl?: string
+): Promise<Task | null> {
+  const db = getDb(databaseUrl);
+  const [task] = await db.select().from(tasks).where(eq(tasks.id, id)).limit(1);
+
+  return task ?? null;
 }
 
 /**
  * Get all tasks
- * @returns Array of all tasks
  */
-export async function getAllTasks(): Promise<Task[]> {
-  // TODO: Implement in issue #12
-  throw new Error("getAllTasks not yet implemented - pending issue #12");
+export async function getAllTasks(databaseUrl?: string): Promise<Task[]> {
+  const db = getDb(databaseUrl);
+  return db.select().from(tasks);
 }
 
 /**
- * Update a task
- * @param _id - The task ID
- * @param _input - The fields to update
- * @returns The updated task if found, undefined otherwise
+ * Update a task by ID
  */
 export async function updateTask(
-  _id: string,
-  _input: UpdateTaskInput
-): Promise<Task | undefined> {
-  // TODO: Implement in issue #12
-  throw new Error("updateTask not yet implemented - pending issue #12");
+  id: string,
+  input: UpdateTaskInput,
+  databaseUrl?: string
+): Promise<Task | null> {
+  const db = getDb(databaseUrl);
+  const [task] = await db
+    .update(tasks)
+    .set({
+      ...input,
+      updatedAt: new Date(),
+    })
+    .where(eq(tasks.id, id))
+    .returning();
+
+  return task ?? null;
 }
 
 /**
- * Delete a task
- * @param _id - The task ID
- * @returns true if deleted, false if not found
+ * Delete a task by ID
  */
-export async function deleteTask(_id: string): Promise<boolean> {
-  // TODO: Implement in issue #12
-  throw new Error("deleteTask not yet implemented - pending issue #12");
+export async function deleteTask(
+  id: string,
+  databaseUrl?: string
+): Promise<boolean> {
+  const db = getDb(databaseUrl);
+  const result = await db.delete(tasks).where(eq(tasks.id, id)).returning();
+
+  return result.length > 0;
 }
