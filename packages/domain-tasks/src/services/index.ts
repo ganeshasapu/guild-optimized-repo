@@ -1,2 +1,1 @@
-// Task services will be exported here
-export {};
+export * from "./task.service";
