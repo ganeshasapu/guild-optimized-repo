@@ -40,12 +40,26 @@ describe("Task Components", () => {
     });
   });
 
+  describe("CreateTaskDialog", () => {
+    it("should export CreateTaskDialog component", async () => {
+      const { CreateTaskDialog } = await import("../../src/components/create-task-dialog");
+      expect(CreateTaskDialog).toBeDefined();
+      expect(typeof CreateTaskDialog).toBe("function");
+    });
+
+    it("should export CreateTaskDialogProps type", async () => {
+      const module = await import("../../src/components/create-task-dialog");
+      expect(module).toHaveProperty("CreateTaskDialog");
+    });
+  });
+
   describe("Component exports", () => {
     it("should export all components from index", async () => {
       const components = await import("../../src/components");
       expect(components).toHaveProperty("TaskCard");
       expect(components).toHaveProperty("TaskForm");
       expect(components).toHaveProperty("TaskList");
+      expect(components).toHaveProperty("CreateTaskDialog");
     });
   });
 });
