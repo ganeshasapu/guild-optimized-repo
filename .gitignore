@@ -26,9 +26,18 @@ coverage/
 test-results/
 momentic-reports/
 
+# Playwright
+e2e/test-results/
+e2e/screenshots/
+playwright-report/
+.agent-*.pid
+
 # Neon
 .neon-branch-id
 .dev-pid
 
 # Context (conductor)
 .context/
+
+# Turborepo
+.turbo
