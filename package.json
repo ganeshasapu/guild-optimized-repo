@@ -8,12 +8,16 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "agent:verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm build",
+    "agent:verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm agent:check-ui",
+    "agent:check-ui": "bash scripts/agent-check-ui.sh",
+    "agent:screenshot": "bash scripts/agent-screenshot.sh",
+    "agent:playwright": "bash scripts/agent-playwright.sh",
     "db:generate": "turbo run db:generate --filter=@guild-optimized/db",
     "db:migrate": "turbo run db:migrate --filter=@guild-optimized/db",
     "db:studio": "turbo run db:studio --filter=@guild-optimized/db"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "prettier": "^3.8.1",
     "turbo": "^2.9.3"
   },

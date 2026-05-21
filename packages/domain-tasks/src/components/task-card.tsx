@@ -1,15 +1,9 @@
-import * as React from "react";
-import { AlertCircle, Clock, CheckCircle2 } from "lucide-react";
+"use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Badge,
-  cn,
-} from "@guild-optimized/ui";
+import * as React from "react";
+import { Circle, CircleDot, CheckCircle2 } from "lucide-react";
+
+import { Badge, cn } from "@guild-optimized/ui";
 
 import type { Task } from "../types/task.types";
 
@@ -21,46 +15,30 @@ export interface TaskCardProps {
 
 const statusConfig = {
   todo: {
-    label: "To Do",
-    variant: "secondary" as const,
-    icon: Clock,
+    label: "Todo",
+    icon: Circle,
+    iconClass: "text-muted-foreground",
   },
   in_progress: {
     label: "In Progress",
-    variant: "default" as const,
-    icon: AlertCircle,
+    icon: CircleDot,
+    iconClass: "text-foreground",
   },
   done: {
     label: "Done",
-    variant: "outline" as const,
     icon: CheckCircle2,
-  },
-};
-
-const priorityConfig = {
-  low: {
-    label: "Low",
-    color: "text-muted-foreground",
-  },
-  medium: {
-    label: "Medium",
-    color: "text-foreground",
-  },
-  high: {
-    label: "High",
-    color: "text-destructive",
+    iconClass: "text-muted-foreground/50",
   },
 };
 
 export function TaskCard({ task, onClick, className }: TaskCardProps) {
-  const statusInfo = statusConfig[task.status];
-  const priorityInfo = priorityConfig[task.priority];
-  const StatusIcon = statusInfo.icon;
+  const status = statusConfig[task.status];
+  const StatusIcon = status.icon;
 
   return (
-    <Card
+    <div
       className={cn(
-        "transition-colors hover:bg-accent/50 cursor-pointer",
+        "flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors hover:bg-accent/50",
         className,
       )}
       onClick={() => onClick?.(task)}
@@ -73,33 +51,53 @@ export function TaskCard({ task, onClick, className }: TaskCardProps) {
         }
       }}
     >
-      <CardHeader>
-        <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-lg">{task.title}</CardTitle>
-          <Badge variant={statusInfo.variant} className="shrink-0">
-            <StatusIcon className="mr-1 h-3 w-3" />
-            {statusInfo.label}
-          </Badge>
-        </div>
-        {task.description && (
-          <CardDescription className="line-clamp-2">
-            {task.description}
-          </CardDescription>
+      <StatusIcon className={cn("h-4 w-4 shrink-0", status.iconClass)} />
+
+      <span
+        className={cn(
+          "min-w-0 flex-1 truncate text-sm",
+          task.status === "done"
+            ? "text-muted-foreground line-through"
+            : "text-foreground",
         )}
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <span className="text-muted-foreground">Priority:</span>
-            <span className={cn("font-medium", priorityInfo.color)}>
-              {priorityInfo.label}
-            </span>
-          </div>
-          <time className="text-muted-foreground">
-            {new Date(task.createdAt).toLocaleDateString()}
-          </time>
-        </div>
-      </CardContent>
-    </Card>
+      >
+        {task.title}
+      </span>
+
+      <PriorityBadge priority={task.priority} />
+
+      <span className="w-16 shrink-0 text-right text-xs text-muted-foreground">
+        {formatRelativeDate(task.createdAt)}
+      </span>
+    </div>
   );
+}
+
+function PriorityBadge({ priority }: { priority: Task["priority"] }) {
+  if (priority === "high") {
+    return (
+      <Badge variant="destructive" className="shrink-0 text-[11px] font-normal">
+        Urgent
+      </Badge>
+    );
+  }
+  return (
+    <Badge variant="outline" className="shrink-0 text-[11px] font-normal">
+      {priority === "low" ? "Low" : "Medium"}
+    </Badge>
+  );
+}
+
+function formatRelativeDate(date: Date | string): string {
+  const d = new Date(date);
+  const now = new Date();
+  const diffDays = Math.floor(
+    (now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays}d ago`;
+
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }

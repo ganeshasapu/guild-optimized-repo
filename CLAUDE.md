@@ -10,7 +10,26 @@
 ## Commands
 
 ### Agent Workflow
-- `pnpm agent:verify` — Full pipeline: typecheck → lint → test → build
+
+**Available tools:**
+- `pnpm agent:verify` — Full pipeline: typecheck → lint → test → build → runtime smoke tests
+- `pnpm agent:check-ui` — Runtime verification: build, start server, Playwright smoke tests
+- `pnpm agent:screenshot "/tasks,/tasks/[id]"` — Take screenshots of specific routes (saved to `e2e/screenshots/`). View with the Read tool.
+- `pnpm agent:playwright e2e/scratch.spec.ts` — Run an arbitrary Playwright script (for interactive scenarios like opening dialogs, filling forms). Write the script, run it, then view screenshots with the Read tool.
+
+All agent tools auto-detect a free port — they never kill existing processes on port 3000.
+
+**REQUIRED: UI development workflow.** When building or modifying any UI, you MUST follow this loop:
+
+1. Read `DESIGN.md` before writing any code — it defines layout, component patterns, spacing, and color tokens.
+2. Make your changes.
+3. Run `pnpm typecheck && pnpm lint` — fix any errors before continuing.
+4. Run `pnpm agent:screenshot` with the routes you changed to take screenshots.
+5. View each screenshot using the Read tool. Evaluate: is it polished? aligned? does spacing look right? are there visual issues?
+6. If it's not good enough, go back to step 2 and iterate. You should go through at least 2 visual iterations — don't settle on the first version.
+7. For interactive elements (dialogs, forms, dropdowns), write a Playwright script in `e2e/scratch.spec.ts` that opens them and takes screenshots. Run it with `pnpm agent:playwright e2e/scratch.spec.ts`, then view the screenshots.
+8. When satisfied, run `pnpm agent:check-ui` to verify no runtime errors on any route.
+9. Do a final screenshot of all changed routes and confirm everything looks right.
 
 ### Development
 - `pnpm dev` — Start all dev servers
@@ -60,7 +79,8 @@ Each domain (`packages/domain-*`) is a self-contained feature boundary:
 2. Add `CLAUDE.md` with package-specific conventions
 3. Add `@guild-optimized/domain-NAME` to `apps/web/package.json`
 4. Add to `transpilePackages` in `apps/web/next.config.ts`
-5. Re-export routes from `apps/web/app/(domains)/NAME/`
+5. Add `@source "../../../packages/domain-NAME/src";` to `apps/web/app/global.css` (Tailwind v4 needs this to scan workspace packages for utility classes)
+6. Re-export routes from `apps/web/app/(domains)/NAME/`
 
 ### Adding a New Route from a Domain
 
@@ -108,8 +128,12 @@ Each domain (`packages/domain-*`) is a self-contained feature boundary:
 - Queries live in `src/services/`, not in components or actions
 
 ### Components
-- Use `@guild-optimized/ui` for base components (Button, Input, Card, etc.)
+- **shadcn preset**: `b1D0f1JA` (style: `radix-mira`, icons: `remixicon`). Config in `apps/web/components.json`.
+- To add a new shadcn component: `pnpm dlx shadcn@latest add <component> -c apps/web`
+- New shadcn components land in `apps/web/app/components/ui/`. Move to `packages/ui/` if shared across domain packages.
+- Use `@guild-optimized/ui` for existing base components (Button, Input, Card, etc.)
 - Domain components live in `packages/domain-NAME/src/components/`
 - Use the `cn()` utility from `@guild-optimized/ui` for className merging
-- Icons: `lucide-react` only
-- Colors: semantic tokens (`bg-primary`, `text-muted-foreground`) — never raw palette values
+- Icons: `@remixicon/react` (shadcn preset default). Existing `lucide-react` usage is fine.
+- Colors: semantic CSS variable tokens (`bg-primary`, `text-muted-foreground`) — never raw color values
+- Color tokens and theming are defined in `apps/web/app/global.css` via CSS variables (light + dark mode)

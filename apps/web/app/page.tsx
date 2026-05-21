@@ -1,12 +1,38 @@
-import { Button } from "@guild-optimized/ui";
-import { APP_NAME } from "@guild-optimized/shared";
+import Link from "next/link";
+import { CheckSquare, ArrowRight } from "lucide-react";
+
+import { Card, CardHeader, CardTitle, CardDescription } from "@guild-optimized/ui";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-24">
-      <h1 className="text-4xl font-bold">{APP_NAME}</h1>
-      <p className="text-muted-foreground">Guild-optimized starter template</p>
-      <Button>Get Started</Button>
-    </main>
+    <div className="container mx-auto max-w-4xl py-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <p className="mt-1 text-muted-foreground">
+          Welcome to Guild Optimized
+        </p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Link href="/tasks">
+          <Card className="transition-colors hover:bg-accent/50">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary/10">
+                    <CheckSquare className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-base">Tasks</CardTitle>
+                    <CardDescription>Manage tasks and track progress</CardDescription>
+                  </div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
+      </div>
+    </div>
   );
 }
