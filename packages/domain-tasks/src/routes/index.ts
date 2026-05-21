@@ -1,2 +1,1 @@
-// Task routes will be exported here
-export {};
+export { default as TasksPage } from "./page";
