@@ -1,2 +1,1 @@
-// Task types will be exported here
-export {};
+export * from "./task.types";
