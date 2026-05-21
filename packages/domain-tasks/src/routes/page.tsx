@@ -6,7 +6,7 @@ import { Button } from "@guild-optimized/ui";
 
 import { getAllTasks } from "../services/task.service";
 import { CreateTaskDialog } from "../components/create-task-dialog";
-import { TaskList } from "../components/task-list";
+import { TaskListClient } from "../components/task-list-client";
 
 /**
  * Tasks page - displays all tasks with ability to filter and create new tasks
@@ -36,7 +36,7 @@ export default async function TasksPage() {
         </CreateTaskDialog>
       </div>
 
-      <TaskList
+      <TaskListClient
         tasks={tasks}
         emptyMessage="No tasks yet. Create one to get started!"
       />
