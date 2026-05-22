@@ -1,9 +1,20 @@
 import Link from "next/link";
 import { CheckSquare, ArrowRight } from "lucide-react";
 
-import { Card, CardHeader, CardTitle, CardDescription } from "@guild-optimized/ui";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@guild-optimized/ui";
+import { getAllTasks } from "@guild-optimized/domain-tasks";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  // Fetch all tasks
+  const tasks = await getAllTasks();
+
+  // Count tasks by status
+  const todoCount = tasks.filter(task => task.status === "todo").length;
+  const inProgressCount = tasks.filter(task => task.status === "in_progress").length;
+  const doneCount = tasks.filter(task => task.status === "done").length;
+
   return (
     <div className="container mx-auto max-w-4xl py-8">
       <div className="mb-8">
@@ -13,6 +24,43 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Summary Cards */}
+      <div className="mb-8">
+        <h2 className="mb-4 text-lg font-semibold">Task Summary</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Todo</CardTitle>
+              <CardDescription>Tasks to be started</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{todoCount}</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">In Progress</CardTitle>
+              <CardDescription>Currently active tasks</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{inProgressCount}</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Done</CardTitle>
+              <CardDescription>Completed tasks</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{doneCount}</div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Feature Cards */}
       <div className="grid gap-4 sm:grid-cols-2">
         <Link href="/tasks">
           <Card className="transition-colors hover:bg-accent/50">
