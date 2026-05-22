@@ -74,16 +74,26 @@ export function TaskCard({ task, onClick, className }: TaskCardProps) {
 }
 
 function PriorityBadge({ priority }: { priority: Task["priority"] }) {
-  if (priority === "high") {
-    return (
-      <Badge variant="destructive" className="shrink-0 text-[11px] font-normal">
-        Urgent
-      </Badge>
-    );
-  }
+  const priorityConfig = {
+    low: {
+      label: "Low",
+      variant: "secondary" as const,
+    },
+    medium: {
+      label: "Medium",
+      variant: "default" as const,
+    },
+    high: {
+      label: "High",
+      variant: "destructive" as const,
+    },
+  };
+
+  const config = priorityConfig[priority];
+
   return (
-    <Badge variant="outline" className="shrink-0 text-[11px] font-normal">
-      {priority === "low" ? "Low" : "Medium"}
+    <Badge variant={config.variant} className="shrink-0 text-[11px] font-normal">
+      {config.label}
     </Badge>
   );
 }
