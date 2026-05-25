@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import { getDb, tasks } from "@guild-optimized/db";
 
@@ -82,4 +82,46 @@ export async function deleteTask(
   const result = await db.delete(tasks).where(eq(tasks.id, id)).returning();
 
   return result.length > 0;
+}
+
+/**
+ * Get task statistics grouped by status
+ */
+export async function getTaskStatistics(databaseUrl?: string): Promise<{
+  todo: number;
+  inProgress: number;
+  done: number;
+  total: number;
+}> {
+  const db = getDb(databaseUrl);
+  
+  const result = await db
+    .select({
+      status: tasks.status,
+      count: sql<number>`cast(count(*) as integer)`,
+    })
+    .from(tasks)
+    .groupBy(tasks.status);
+
+  const stats = {
+    todo: 0,
+    inProgress: 0,
+    done: 0,
+    total: 0,
+  };
+
+  for (const row of result) {
+    const count = Number(row.count);
+    stats.total += count;
+    
+    if (row.status === "todo") {
+      stats.todo = count;
+    } else if (row.status === "in_progress") {
+      stats.inProgress = count;
+    } else if (row.status === "done") {
+      stats.done = count;
+    }
+  }
+
+  return stats;
 }
