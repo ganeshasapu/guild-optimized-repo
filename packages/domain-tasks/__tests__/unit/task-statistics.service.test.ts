@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { sql } from "drizzle-orm";
 
 import { getTaskStatistics } from "../../src/services/task.service";
 
