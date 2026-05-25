@@ -19,9 +19,10 @@ for (const route of routes) {
     await page.waitForTimeout(1000);
     const filename = route === "/" ? "home" : route.replace(/\//g, "-").replace(/^-/, "");
     await page.screenshot({
-      path: path.join(SCREENSHOTS_DIR, `${filename}.png`),
+      path: path.join(SCREENSHOTS_DIR, `${filename}.jpg`),
       fullPage: true,
-      scale: "device",
+      type: "jpeg",
+      quality: 40,
     });
   });
 }
