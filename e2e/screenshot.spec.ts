@@ -22,7 +22,7 @@ for (const route of routes) {
       path: path.join(SCREENSHOTS_DIR, `${filename}.jpg`),
       fullPage: true,
       type: "jpeg",
-      quality: 40,
+      quality: 80,
     });
   });
 }
