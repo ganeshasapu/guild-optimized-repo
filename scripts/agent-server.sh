@@ -44,8 +44,12 @@ if [ -f "$ROOT_DIR/.env" ]; then
   set +a
 fi
 
-echo "==> Building Next.js app..."
-pnpm --filter=@guild-optimized/web build
+if [ -d "$ROOT_DIR/apps/web/.next" ]; then
+  echo "==> Build output exists, skipping build"
+else
+  echo "==> Building Next.js app..."
+  pnpm --filter=@guild-optimized/web build
+fi
 
 echo "==> Starting Next.js server on port $AGENT_PORT..."
 PORT="$AGENT_PORT" pnpm --filter=@guild-optimized/web exec next start -p "$AGENT_PORT" &
