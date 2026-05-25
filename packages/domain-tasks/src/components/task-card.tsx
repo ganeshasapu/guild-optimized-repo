@@ -6,6 +6,7 @@ import { Circle, CircleDot, CheckCircle2 } from "lucide-react";
 import { Badge, cn } from "@guild-optimized/ui";
 
 import type { Task } from "../types/task.types";
+import { formatRelativeTime } from "../lib/format-relative-time";
 
 export interface TaskCardProps {
   task: Task;
@@ -38,7 +39,7 @@ export function TaskCard({ task, onClick, className }: TaskCardProps) {
   return (
     <div
       className={cn(
-        "flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors hover:bg-accent/50",
+        "flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors hover:bg-accent/50",
         className,
       )}
       onClick={() => onClick?.(task)}
@@ -51,7 +52,7 @@ export function TaskCard({ task, onClick, className }: TaskCardProps) {
         }
       }}
     >
-      <StatusIcon className={cn("h-4 w-4 shrink-0", status.iconClass)} />
+      <StatusIcon className={cn("h-4 w-4 shrink-0 mt-0.5", status.iconClass)} />
 
       <span
         className={cn(
@@ -64,7 +65,12 @@ export function TaskCard({ task, onClick, className }: TaskCardProps) {
         {task.title}
       </span>
 
-      <PriorityBadge priority={task.priority} />
+      <div className="flex shrink-0 flex-col items-end gap-1">
+        <PriorityBadge priority={task.priority} />
+        <span className="text-xs text-muted-foreground">
+          {formatRelativeTime(task.updatedAt)}
+        </span>
+      </div>
 
       <span className="w-16 shrink-0 text-right text-xs text-muted-foreground">
         {formatRelativeDate(task.createdAt)}
