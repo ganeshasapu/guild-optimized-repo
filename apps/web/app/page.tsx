@@ -2,10 +2,15 @@ import Link from "next/link";
 import { CheckSquare, ArrowRight } from "lucide-react";
 
 import { Card, CardHeader, CardTitle, CardDescription } from "@guild-optimized/ui";
+import { WelcomeBanner } from "./components/welcome-banner";
 
 export default function Home() {
   return (
     <div className="container mx-auto max-w-4xl py-8">
+      {/* Welcome Banner */}
+      <WelcomeBanner />
+
+      {/* Dashboard Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
         <p className="mt-1 text-muted-foreground">
@@ -13,6 +18,7 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Feature Cards */}
       <div className="grid gap-4 sm:grid-cols-2">
         <Link href="/tasks">
           <Card className="transition-colors hover:bg-accent/50">
