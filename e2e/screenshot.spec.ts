@@ -16,10 +16,12 @@ test.beforeAll(() => {
 for (const route of routes) {
   test(`screenshot ${route}`, async ({ page }) => {
     await page.goto(route, { waitUntil: "networkidle" });
+    await page.waitForTimeout(1000);
     const filename = route === "/" ? "home" : route.replace(/\//g, "-").replace(/^-/, "");
     await page.screenshot({
       path: path.join(SCREENSHOTS_DIR, `${filename}.png`),
       fullPage: true,
+      scale: "device",
     });
   });
 }
