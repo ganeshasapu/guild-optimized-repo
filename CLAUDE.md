@@ -14,7 +14,7 @@
 **Available tools:**
 - `pnpm agent:verify` — Full pipeline: typecheck → lint → test → build → runtime smoke tests
 - `pnpm agent:check-ui` — Runtime verification: build, start server, Playwright smoke tests
-- `pnpm agent:screenshot "/tasks,/tasks/[id]"` — Take screenshots of specific routes (saved to `e2e/screenshots/`). View with the Read tool.
+- `pnpm agent:screenshot "/,/some-route"` — Take screenshots of specific routes (saved to `e2e/screenshots/`). View with the Read tool.
 - `pnpm agent:playwright e2e/scratch.spec.ts` — Run an arbitrary Playwright script (for interactive scenarios like opening dialogs, filling forms). Write the script, run it, then view screenshots with the Read tool.
 
 All agent tools auto-detect a free port — they never kill existing processes on port 3000.

@@ -4,7 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  CheckSquare,
   LayoutDashboard,
   Menu,
 } from "lucide-react";
@@ -13,7 +12,6 @@ import { Button, Separator, cn } from "@guild-optimized/ui";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Tasks", href: "/tasks", icon: CheckSquare },
 ];
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {

@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@guild-optimized/db": "workspace:*",
-    "@guild-optimized/domain-tasks": "workspace:*",
     "@guild-optimized/shared": "workspace:*",
     "@guild-optimized/ui": "workspace:*",
     "@neondatabase/serverless": "^1.0.2",
